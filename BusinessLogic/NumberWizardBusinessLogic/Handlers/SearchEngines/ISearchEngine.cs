@@ -1,7 +1,9 @@
-﻿namespace Assets.Code.Handlers
+﻿namespace NumberWizardBusinessLogic.Handlers.SearchEngines
 {
-
-    public interface INumberGuessingEngine
+    /// <summary>
+    ///     Interface for the search engines.
+    /// </summary>
+    public interface ISearchEngine
     {
         int Guess { get; }
         int MaximumNumber { get; }
