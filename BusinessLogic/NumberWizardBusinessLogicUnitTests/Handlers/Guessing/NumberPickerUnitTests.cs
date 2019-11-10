@@ -43,5 +43,18 @@
 
             displayHandler.Verify(mock => mock.DisplayMessage(It.IsAny<string>()), Times.Once);
         }
+
+        [Fact]
+        public void CanFailToGuessNumber()
+        {
+            var displayHandler = new Mock<IDisplayHandler>().Object;
+            const int actualNumber = 37;
+            const int expectedNumber = 42;
+            var numberPicker = new NumberPicker(displayHandler, actualNumber, actualNumber);
+
+            var canGuessExpectedNumber = numberPicker.GuessNumber(expectedNumber);
+
+            Assert.False(canGuessExpectedNumber);
+        }
     }
 }
