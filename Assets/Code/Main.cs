@@ -20,6 +20,7 @@ namespace Assets.Code
     /// <seealso href="https://refactoring.guru/design-patterns/mediator"/>
     public class Main : MonoBehaviour
     {
+        private const int MaximumRounds = 10;
         private int _maximumNumber = 1000;
         private int _minimumNumber;
         private int _guess;
@@ -29,6 +30,8 @@ namespace Assets.Code
         private DisplayHandler _displayHandler;
         private GuessHandler _guessHandler;
         private InputHandler _inputHandler;
+        private RoundManager _roundManager;
+        private ScoreManager _scoreManager;
 
         private GameState _gameState;
 
@@ -69,7 +72,10 @@ namespace Assets.Code
         /// </summary>
         private void DisplayStartMessage()
         {
-            var startMessage = $"Pick a number between {_minimumNumber} and {_maximumNumber}. Press the space bar when ready to continue...";
+            //ToDo: fix hard coded label.
+            //ToDo: add instructions for scoring mechanic, should there be a max score? Most likely. Or best 3 out of 5, would be less awful to play.
+
+            var startMessage = $"I am going to pick a number between {_minimumNumber} and {_maximumNumber}, you must do the same. We will have {MaximumRounds} rounds to guess the each others number. Press the space bar when ready to continue...";
             Debug.Log(startMessage);
         }
 
@@ -143,6 +149,9 @@ namespace Assets.Code
 
             _guessHandler = new GuessHandler(_searchEngine, _displayHandler);
             _inputHandler = new InputHandler();
+
+            _roundManager = RoundManager.GetRoundManager(MaximumRounds);
+            _scoreManager = ScoreManager.GetScoreManager();
 
             _gameState = GameState.Start;
         }
