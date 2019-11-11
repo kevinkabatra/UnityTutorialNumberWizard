@@ -55,6 +55,16 @@ namespace Assets.Code
         /// </remarks>
         public void Update()
         {
+            //ToDo: Add UI text field: user input will need to come from a text field in the user interface
+            //ToDo: MVP hard code user's guess: The user's guess can be hard coded to get the game logic working, then the UI can be layered on top of that.
+            //ToDo: Add additional state: While we are waiting for the user's guess to come in the state should change to `WaitingForUserGuess`, this will disable the other inputs from being listened for
+            //ToDo: Update State Machine: Once the user enters their guess the state will switch to the current GameState:Guess.
+            //ToDo: Both guesses will be considered at the same time, so both the computer and the player could score on each turn.
+            //ToDo: The computer and the player will tell one another if the guess was correct, too high, or too low.
+            //ToDo: After the guesses are displayed the round should be updated
+            //ToDo: Add conditional logic: if there are no more rounds then the "match" will have finished.
+            //ToDo: Implement best out of three system. Could either use a state machine for this, or another class like RoundManager. Might make more sense given the design to have a MatchManager instead.
+
             HandleUserInput();
         }
 
