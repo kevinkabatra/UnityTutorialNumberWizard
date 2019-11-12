@@ -1,10 +1,12 @@
-﻿namespace NumberWizardBusinessLogic.Handlers.Guessing
+﻿namespace NumberWizardBusinessLogic.Handlers.Scoring.ScoringSubSystems
 {
     using System;
 
     /// <summary>
     ///     Class to control the rounds of the game.
     /// </summary>
+    /// <remarks>Singleton class.</remarks>
+    /// <seealso href="https://refactoring.guru/design-patterns/singleton"/>
     public class RoundManager
     {
         public int Round { get; private set; }
@@ -31,10 +33,10 @@
         /// <summary>
         ///     Returns a singleton instance of <c>RoundManager</c>.
         /// </summary>
-        /// <param name="maxRounds">How many rounds the game will have.</param>
+        /// <param name="maximumRounds">How many rounds the game will have.</param>
         /// <seealso href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/lock-statement"/>
         /// <returns>ScoreManager. Representing the manager of the round.</returns>
-        public static RoundManager GetRoundManager(int maxRounds = 0)
+        public static RoundManager GetRoundManager(int maximumRounds = 0)
         {
             if (_manager == null)
             {
@@ -44,13 +46,13 @@
                     // should check conditional again, after lock is released the singleton would have been creates=d during a previous thread.
                     if (_manager == null)
                     {
-                        if (maxRounds == 0)
+                        if (maximumRounds == 0)
                         {
                             //ToDo: remove hard coded label
                             throw new ArgumentException("MaxRounds must be supplied, and cannot be 0, when creating a RoundManager for the first time.");
                         }
                         
-                        _manager = new RoundManager(maxRounds);
+                        _manager = new RoundManager(maximumRounds);
                     }
                 }
             }

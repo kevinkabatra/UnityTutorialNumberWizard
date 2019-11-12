@@ -1,7 +1,7 @@
-﻿namespace NumberWizardBusinessLogicUnitTests.Handlers.Guessing
+﻿namespace NumberWizardBusinessLogicUnitTests.Handlers.Scoring.ScoringSubSystems
 {
     using System;
-    using NumberWizardBusinessLogic.Handlers.Guessing;
+    using NumberWizardBusinessLogic.Handlers.Scoring.ScoringSubSystems;
     using Xunit;
 
     /// <summary>

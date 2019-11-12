@@ -32,7 +32,7 @@
         /// <returns>Int. Representing the number that the computer will pick.</returns>
         private static int GetRandomNumber(int maximumNumber, int minimumNumber = 0)
         {
-            var randomGenerator = new System.Random();
+            var randomGenerator = new Random();
             var randomNumber = randomGenerator.Next(minimumNumber, maximumNumber);
 
             return randomNumber;

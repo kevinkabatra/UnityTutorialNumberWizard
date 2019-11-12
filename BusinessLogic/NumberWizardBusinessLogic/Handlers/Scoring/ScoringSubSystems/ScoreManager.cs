@@ -1,10 +1,10 @@
-﻿namespace NumberWizardBusinessLogic.Handlers.Guessing
+﻿namespace NumberWizardBusinessLogic.Handlers.Scoring.ScoringSubSystems
 {
     /// <summary>
     ///     Class to control the score for the Player and the Computer.
     /// </summary>
-    /// <seealso href="https://refactoring.guru/design-patterns/singleton"/>
     /// <remarks>Singleton class.</remarks>
+    /// <seealso href="https://refactoring.guru/design-patterns/singleton"/>
     public class ScoreManager
     {
         public int ComputerScore { get; private set; }
