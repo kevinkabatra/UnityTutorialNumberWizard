@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29409.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NumberWizardBusinessLogic", "NumberWizardBusinessLogic.csproj", "{7CA7012C-A2F7-461E-8B25-6F0E551AE1B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NumberWizardBusinessLogic", "NumberWizardBusinessLogic.csproj", "{7CA7012C-A2F7-461E-8B25-6F0E551AE1B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NumberWizardBusinessLogicUnitTests", "..\NumberWizardBusinessLogicUnitTests\NumberWizardBusinessLogicUnitTests.csproj", "{6C89CD39-44E2-41C7-AFB5-BAB2E201DA79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NumberWizardBusinessLogicUnitTests", "..\NumberWizardBusinessLogicUnitTests\NumberWizardBusinessLogicUnitTests.csproj", "{6C89CD39-44E2-41C7-AFB5-BAB2E201DA79}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -7,7 +7,7 @@
     /// </summary>
     /// <remarks>Singleton class.</remarks>
     /// <seealso href="https://refactoring.guru/design-patterns/singleton"/>
-    public class RoundManager
+    internal class RoundManager
     {
         public int Round { get; private set; }
         public int MaxRounds { get; }

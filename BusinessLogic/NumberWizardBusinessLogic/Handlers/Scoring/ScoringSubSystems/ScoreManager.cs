@@ -5,7 +5,7 @@
     /// </summary>
     /// <remarks>Singleton class.</remarks>
     /// <seealso href="https://refactoring.guru/design-patterns/singleton"/>
-    public class ScoreManager
+    internal class ScoreManager
     {
         public int ComputerScore { get; private set; }
         public int PlayerScore { get; private set; }
