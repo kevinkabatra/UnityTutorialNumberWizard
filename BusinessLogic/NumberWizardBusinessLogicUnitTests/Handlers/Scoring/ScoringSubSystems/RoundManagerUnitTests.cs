@@ -32,7 +32,7 @@
             const int expectedNumberOfRounds = 1;
             var manager = RoundManager.GetRoundManager(expectedNumberOfRounds);
 
-            Assert.Equal(expectedNumberOfRounds, manager.MaxRounds);
+            Assert.Equal(expectedNumberOfRounds, manager.MaximumRounds);
         }
 
         [Fact]
@@ -54,7 +54,7 @@
             Exception exception = Assert.Throws<ArgumentException>(() => RoundManager.GetRoundManager());
 
             //ToDo: remove hard coded label
-            Assert.Equal("MaxRounds must be supplied, and cannot be 0, when creating a RoundManager for the first time.", exception.Message);
+            Assert.Equal("MaximumRounds must be supplied, and cannot be 0, when creating a RoundManager for the first time.", exception.Message);
         }
 
         [Fact]

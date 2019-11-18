@@ -10,7 +10,7 @@
     internal class RoundManager
     {
         public int Round { get; private set; }
-        public int MaxRounds { get; }
+        public int MaximumRounds { get; }
 
         private static RoundManager _manager;
         private static readonly object ThreadSafeLock = new object();
@@ -21,7 +21,7 @@
         /// <returns>True. If move to next round was successful, else false.</returns>
         public bool NextRound()
         {
-            if (Round == MaxRounds)
+            if (Round == MaximumRounds)
             {
                 return false;
             }
@@ -49,7 +49,7 @@
                         if (maximumRounds == 0)
                         {
                             //ToDo: remove hard coded label
-                            throw new ArgumentException("MaxRounds must be supplied, and cannot be 0, when creating a RoundManager for the first time.");
+                            throw new ArgumentException("MaximumRounds must be supplied, and cannot be 0, when creating a RoundManager for the first time.");
                         }
                         
                         _manager = new RoundManager(maximumRounds);
@@ -75,11 +75,11 @@
         /// <summary>
         ///     Constructor.
         /// </summary>
-        /// <param name="maxRounds">How many rounds the game will have.</param>
-        private RoundManager(int maxRounds)
+        /// <param name="maximumRounds">How many rounds the game will have.</param>
+        private RoundManager(int maximumRounds)
         {
             Round = 0;
-            MaxRounds = maxRounds;
+            MaximumRounds = maximumRounds;
         }
     }
 }

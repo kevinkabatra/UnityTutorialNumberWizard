@@ -32,7 +32,7 @@
 
             var score = ScoreManager.GetScoreManager();
 
-            Assert.Equal(expectedScore,score.ComputerScore);
+            Assert.Equal(expectedScore, score.ComputerScore);
             Assert.Equal(expectedScore, score.PlayerScore);
         }
 

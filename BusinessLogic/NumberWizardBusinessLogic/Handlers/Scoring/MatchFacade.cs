@@ -9,6 +9,12 @@
     /// <seealso href="https://refactoring.guru/design-patterns/facade"/>
     public class MatchFacade
     {
+        public int ComputerScore => _scoreManager.ComputerScore;
+        public int PlayerScore => _scoreManager.PlayerScore;
+        
+        public int Round => _roundManager.Round;
+        public int MaximumRounds => _roundManager.MaximumRounds;
+
         private static RoundManager _roundManager;
         private static ScoreManager _scoreManager;
 
@@ -69,7 +75,7 @@
         ///     Resets the singleton, this is required for unit testing
         /// and for starting a new game.
         /// </summary>
-        public void Reset()
+        public static void Reset()
         {
             RoundManager.Reset();
             ScoreManager.Reset();
