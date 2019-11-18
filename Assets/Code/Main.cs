@@ -5,6 +5,7 @@ namespace Assets.Code
     using Handlers.Display;
     using Handlers.Input;
     using NumberWizardBusinessLogic.Handlers.Guessing;
+    using NumberWizardBusinessLogic.Handlers.Scoring;
     using NumberWizardBusinessLogic.Handlers.SearchEngines;
     using States;
     using UnityEngine;
@@ -30,8 +31,8 @@ namespace Assets.Code
         private DisplayHandler _displayHandler;
         private GuessHandler _guessHandler;
         private InputHandler _inputHandler;
-        private RoundManager _roundManager;
-        private ScoreManager _scoreManager;
+
+        private MatchFacade _match;
 
         private GameState _gameState;
 
@@ -160,8 +161,7 @@ namespace Assets.Code
             _guessHandler = new GuessHandler(_searchEngine, _displayHandler);
             _inputHandler = new InputHandler();
 
-            _roundManager = RoundManager.GetRoundManager(MaximumRounds);
-            _scoreManager = ScoreManager.GetScoreManager();
+            _match = new MatchFacade(MaximumRounds);
 
             _gameState = GameState.Start;
         }

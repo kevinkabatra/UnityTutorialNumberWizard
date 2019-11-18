@@ -11,4 +11,8 @@
     </AssemblyAttribute>
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy /Y &quot;$(TargetDir)$(TargetFileName)&quot; &quot;$(SolutionDir)\..\..\Assets\References\$(TargetFileName)&quot;" />
+  </Target>
+
 </Project>
