@@ -3,7 +3,7 @@
     /// <summary>
     ///     Abstract class that handles most of a SearchEngine's implementation.
     /// </summary>
-    public abstract class SearchEngine : ISearchEngine
+    public abstract class SearchEngineAbstract : ISearchEngine
     {
         public int Guess => FindGuess();
         public int MaximumNumber { get; private set; }
@@ -14,7 +14,7 @@
         /// </summary>
         /// <param name="minimumNumber">The minimum number to search for.</param>
         /// <param name="maximumNumber">The maximum number to search for.</param>
-        protected SearchEngine(int minimumNumber, int maximumNumber)
+        protected SearchEngineAbstract(int minimumNumber, int maximumNumber)
         {
             SetMaximumNumber(maximumNumber);
             SetMinimumNumber(minimumNumber);

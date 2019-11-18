@@ -11,9 +11,9 @@
     /// floor((minimumNumber + maximumNumber) / 2). 
     /// </remarks>
     /// <seealso href="https://en.wikipedia.org/wiki/Binary_search_algorithm#Procedure"/>
-    public class BinarySearchEngine : SearchEngine
+    public class BinarySearchEngine : SearchEngineAbstract
     {
-        /// <inheritdoc cref="SearchEngine"/>
+        /// <inheritdoc cref="SearchEngineAbstract"/>
         public BinarySearchEngine(int minimumNumber, int maximumNumber) : base(minimumNumber, maximumNumber)
         {
         }
