@@ -1,26 +1,17 @@
 ﻿namespace NumberWizardBusinessLogicUnitTests.Handlers.Scoring.ScoringSubSystems
 {
-    using System;
     using NumberWizardBusinessLogic.Handlers.Scoring.ScoringSubSystems;
     using Xunit;
 
     /// <summary>
     ///     Exercises Score Manager.
     /// </summary>
-    public class ScoreManagerUnitTests : IDisposable
+    public class ScoreKeeperUnitTests
     {
-        /// <summary>
-        ///     Need to reset the singleton after each test.
-        /// </summary>
-        public void Dispose()
-        {
-            ScoreManager.Reset();
-        }
-
         [Fact]
         public void CanMakeScoreManager()
         {
-            var score = ScoreManager.GetScoreManager();
+            var score = new ScoreKeeper();
 
             Assert.NotNull(score);
         }
@@ -30,7 +21,7 @@
         {
             const int expectedScore = 0;
 
-            var score = ScoreManager.GetScoreManager();
+            var score = new ScoreKeeper();
 
             Assert.Equal(expectedScore, score.ComputerScore);
             Assert.Equal(expectedScore, score.PlayerScore);
@@ -41,7 +32,7 @@
         {
             const int expectedScore = 1;
 
-            var score = ScoreManager.GetScoreManager();
+            var score = new ScoreKeeper();
             score.AddToComputerScore();
             
             Assert.Equal(expectedScore, score.ComputerScore);
@@ -52,7 +43,7 @@
         {
             const int expectedScore = 1;
 
-            var score = ScoreManager.GetScoreManager();
+            var score = new ScoreKeeper();
             score.AddToPlayerScore();
 
             Assert.Equal(expectedScore, score.PlayerScore);

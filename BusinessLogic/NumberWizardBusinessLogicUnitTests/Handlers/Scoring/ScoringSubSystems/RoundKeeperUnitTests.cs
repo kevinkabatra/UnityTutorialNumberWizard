@@ -7,21 +7,13 @@
     /// <summary>
     ///     Exercises Round Manager.
     /// </summary>
-    public class RoundManagerUnitTests : IDisposable
+    public class RoundKeeperUnitTests
     {
-        /// <summary>
-        ///     Need to reset the singleton after each test.
-        /// </summary>
-        public void Dispose()
-        {
-            RoundManager.Reset();
-        }
-
         [Fact]
         public void CanMakeRoundManager()
         {
             const int numberOfRounds = 1;
-            var manager = RoundManager.GetRoundManager(numberOfRounds);
+            var manager = new RoundKeeper(numberOfRounds);
 
             Assert.NotNull(manager);
         }
@@ -30,7 +22,7 @@
         public void CanMakeRoundManagerWithExpectedNumberOfRounds()
         {
             const int expectedNumberOfRounds = 1;
-            var manager = RoundManager.GetRoundManager(expectedNumberOfRounds);
+            var manager = new RoundKeeper(expectedNumberOfRounds);
 
             Assert.Equal(expectedNumberOfRounds, manager.MaximumRounds);
         }
@@ -41,7 +33,7 @@
             const int maxNumberOfRounds = 1;
             const int expectedRound = 1;
 
-            var manager = RoundManager.GetRoundManager(maxNumberOfRounds);
+            var manager = new RoundKeeper(maxNumberOfRounds);
             var result = manager.NextRound();
 
             Assert.Equal(expectedRound, manager.Round);
@@ -49,9 +41,10 @@
         }
 
         [Fact]
-        public void ExceptionThrownWhenNotSettingRounds()
+        public void ExceptionThrownWhenNotSettingRoundsToZero()
         {
-            Exception exception = Assert.Throws<ArgumentException>(() => RoundManager.GetRoundManager());
+            const int numberOfRounds = 0;
+            Exception exception = Assert.Throws<ArgumentException>(() => new RoundKeeper(numberOfRounds));
 
             //ToDo: remove hard coded label
             Assert.Equal("MaximumRounds must be supplied, and cannot be 0, when creating a RoundManager for the first time.", exception.Message);
@@ -63,7 +56,7 @@
             const int maxNumberOfRounds = 1;
             const int expectedRound = 1;
 
-            var manager = RoundManager.GetRoundManager(maxNumberOfRounds);
+            var manager = new RoundKeeper(maxNumberOfRounds);
             manager.NextRound();
             var result = manager.NextRound();
 

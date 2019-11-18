@@ -1,33 +1,17 @@
 ﻿namespace NumberWizardBusinessLogicUnitTests.Handlers.Scoring
 {
-    using System;
     using NumberWizardBusinessLogic.Handlers.Scoring;
     using Xunit;
 
-    public class MatchFacadeUnitTests : IDisposable
+    public class MatchFacadeUnitTests
     {
-        private MatchFacade _match;
-
-        public MatchFacadeUnitTests()
-        {
-            MatchFacade.Reset();
-
-            const int numberOfRounds = 1;
-            _match = MatchFacade.GetMatchFacade(numberOfRounds);
-        }
-
-        /// <summary>
-        ///     Need to reset the singleton after each test.
-        /// </summary>
-        public void Dispose()
-        {
-            MatchFacade.Reset();
-        }
-
         [Fact]
         public void CanMakeMatchFacade()
         {
-            Assert.NotNull(_match);
+            const int numberOfRounds = 1;
+            var match = new MatchFacade(numberOfRounds);
+
+            Assert.NotNull(match);
         }
 
         [Fact]
@@ -35,40 +19,49 @@
         {
             const int expectedNumberOfRounds = 1;
             const int expectedScore = 0;
-            
-            Assert.Equal(expectedNumberOfRounds, _match.MaximumRounds);
-            Assert.Equal(expectedScore, _match.ComputerScore);
-            Assert.Equal(expectedScore, _match.PlayerScore);
+            const int numberOfRounds = 1;
+
+            var match = new MatchFacade(numberOfRounds);
+
+            Assert.Equal(expectedNumberOfRounds, match.MaximumRounds);
+            Assert.Equal(expectedScore, match.ComputerScore);
+            Assert.Equal(expectedScore, match.PlayerScore);
         }
 
         [Fact]
         public void CanIncreaseComputerScore()
         {
             const int expectedScore = 1;
-            
-            _match.AddToComputerScore();
+            const int numberOfRounds = 1;
 
-            Assert.Equal(expectedScore, _match.ComputerScore);
+            var match = new MatchFacade(numberOfRounds);
+            match.AddToComputerScore();
+
+            Assert.Equal(expectedScore, match.ComputerScore);
         }
 
         [Fact]
         public void CanIncreasePlayerScore()
         {
             const int expectedScore = 1;
-            
-            _match.AddToPlayerScore();
+            const int numberOfRounds = 1;
 
-            Assert.Equal(expectedScore, _match.PlayerScore);
+            var match = new MatchFacade(numberOfRounds);
+            match.AddToPlayerScore();
+
+            Assert.Equal(expectedScore, match.PlayerScore);
         }
 
         [Fact]
         public void CanIncreaseRound()
         {
             const int expectedRound = 1;
+            const int numberOfRounds = 1;
 
-            var result = _match.NextRound();
+            var match = new MatchFacade(numberOfRounds);
+            var result = match.NextRound();
 
-            Assert.Equal(expectedRound, _match.Round);
+            Assert.Equal(expectedRound, match.Round);
             Assert.True(result);
         }
     }
