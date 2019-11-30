@@ -2,6 +2,8 @@
 namespace Assets.Code
 {
     using System;
+    using System.Collections.Generic;
+    using System.Threading;
     using Handlers.Display;
     using Handlers.Input;
     using NumberWizardBusinessLogic.Handlers.Guessing;
@@ -34,7 +36,14 @@ namespace Assets.Code
 
         private MatchFacade _match;
 
-        private GameState _gameState;
+        private NumberPicker _computerChosenNumber;
+        
+        private GameState _gameState; // ToDo: possibly introduce a proper state machine to this project
+
+        private const int _mockUserChosenNumber = 37; //ToDo: remove once user can enter input
+        private List<int> _numbersThatHaveBeenGuessed = new List<int>(); //ToDo: remove this once user can actually guess
+
+        private System.Random randomGenerator = new System.Random();
 
         /// <summary>
         ///     Start is called before the first frame update.
@@ -46,6 +55,7 @@ namespace Assets.Code
         {
             Initialize();
             DisplayStartMessage();
+            SimulateGuessing();
         }
 
         /// <summary>
@@ -66,7 +76,75 @@ namespace Assets.Code
             //ToDo: Add conditional logic: if there are no more rounds then the "match" will have finished.
             //ToDo: Implement best out of three system. Could either use a state machine for this, or another class like RoundManager. Might make more sense given the design to have a MatchManager instead.
 
-            HandleUserInput();
+            //if(_gameState == GameState.Start)
+            //{
+            //    HandleUserInput();
+            //}
+            //else
+            //{
+
+            //}
+        }
+
+        private void SimulateGuessing()
+        {
+            var shouldStop = false;
+            var guessIteration = 1;
+            while (!shouldStop)
+            {
+                _displayHandler.DisplayMessage($"Guess Iteration: {guessIteration}");
+                guessIteration++;
+
+                if (guessIteration == 11)
+                {
+                    shouldStop = true;
+                }
+
+                // Simulate user entering their guess
+                var nextMockUserGuess = MockUserInput();
+                _displayHandler.DisplayMessage("User guess is: " + nextMockUserGuess);
+
+                var userGuessResult = _computerChosenNumber.GuessNumber(nextMockUserGuess);
+                if (userGuessResult)
+                {
+                    _match.AddToPlayerScore();
+                    shouldStop = true;
+                }
+
+                _numbersThatHaveBeenGuessed.Add(nextMockUserGuess);
+
+                // Simulate computer guessing and the user replying
+                _guess = _guessHandler.HandleGuess(_minimumNumber, _maximumNumber);
+                _displayHandler.DisplayMessage("Computer guess is: " + _guess);
+                if (_guess == _mockUserChosenNumber)
+                {
+                    _displayHandler.DisplayMessage("Computer guessed correctly.");
+                    _match.AddToComputerScore();
+                    shouldStop = true;
+                }
+                else
+                {
+                    if (_guess < _mockUserChosenNumber)
+                    {
+                        _displayHandler.DisplayMessage("Computer's guess was too low.");
+                        _minimumNumber = _guess + 1; // Up arrow simulation
+
+                    }
+                    else
+                    {
+                        _displayHandler.DisplayMessage("Computer's guess was too high.");
+                        _maximumNumber = _guess - 1; // Down arrow simulation
+                    }
+                }
+
+                // Once all guessing is complete, move to the next round
+                //var canMoveToNextRound = _match.NextRound();
+                //_displayHandler.DisplayMessage(canMoveToNextRound.ToString());
+                //if (!canMoveToNextRound)
+                //{
+                //    Application.Quit();
+                //}
+            }
         }
 
         /// <summary>
@@ -90,6 +168,29 @@ namespace Assets.Code
             Debug.Log(startMessage);
         }
 
+        //ToDo: call this from the start method to get a guess for the user, then ask the computer if this is their number
+        private int MockUserInput()
+        {
+            var maximumNumber = 1000;
+            var minimumNumber = 0;
+
+            var numberToGuess = GetRandomNumber(maximumNumber, minimumNumber);
+            while (_numbersThatHaveBeenGuessed.Contains(numberToGuess))
+            {
+                numberToGuess = GetRandomNumber(minimumNumber, minimumNumber);
+            }
+            
+            return numberToGuess;
+        }
+
+        //ToDo: remove this once the user can enter their own guess
+        private int GetRandomNumber(int maximumNumber, int minimumNumber = 0)
+        {
+            var randomNumber = randomGenerator.Next(minimumNumber, maximumNumber);
+
+            return randomNumber;
+        }
+
         /// <summary>
         ///     Handler for all keyboard input, actions taken depend on the Game State.
         /// </summary>
@@ -103,7 +204,8 @@ namespace Assets.Code
                 case KeyCode.Space:
                     if (_gameState == GameState.Start)
                     {
-                        AttemptGuess();
+                        _gameState = GameState.Guess;
+                        //AttemptGuess();
                     }
                     break;
                     
@@ -164,6 +266,11 @@ namespace Assets.Code
             _match = new MatchFacade(MaximumRounds);
 
             _gameState = GameState.Start;
+
+            _computerChosenNumber = new NumberPicker(_displayHandler, _maximumNumber, _minimumNumber);
+
+            //Skip the first number, the computer is using this for their guess.
+            randomGenerator.Next(_minimumNumber, _maximumNumber);
         }
     }
 }
