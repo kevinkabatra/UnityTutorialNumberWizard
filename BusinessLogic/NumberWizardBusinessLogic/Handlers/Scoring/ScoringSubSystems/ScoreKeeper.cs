@@ -8,8 +8,6 @@
         public int ComputerScore { get; private set; }
         public int PlayerScore { get; private set; }
 
-        private static readonly object ThreadSafeLock = new object();
-
         /// <summary>
         ///     Constructor.
         /// </summary>

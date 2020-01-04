@@ -19,7 +19,8 @@
             if (maximumRounds == 0)
             {
                 //ToDo: remove hard coded label
-                throw new ArgumentException("MaximumRounds must be supplied, and cannot be 0, when creating a RoundManager for the first time.");
+                const string errorMessage = "MaximumRounds must be supplied, and cannot be 0, when creating a RoundManager for the first time.";
+                throw new ArgumentException(errorMessage);
             }
 
             Round = 0;

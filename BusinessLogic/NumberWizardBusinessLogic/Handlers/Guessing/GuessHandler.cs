@@ -45,7 +45,8 @@
         {
             var guessInstructions =
                 "If your number is: higher, press Up arrow key, or if it is lower, press Down arrow key.";
-            _displayHandler.DisplayMessage(guessInstructions);
+            _displayHandler.AppendInstructions(guessInstructions);
+            _displayHandler.DisplayInstructions();
         }
 
         /// <summary>
@@ -66,8 +67,8 @@
         /// </summary>
         private void DisplayGuess()
         {
-            var guessMessage = $"Is your number {_guess}? Press [Y]es or [N]o.";
-            _displayHandler.DisplayMessage(guessMessage);
+            var guessMessage = $"Is your number {_guess}?";
+            _displayHandler.DisplayComputerGuess(guessMessage);
         }
 
         /// <summary>

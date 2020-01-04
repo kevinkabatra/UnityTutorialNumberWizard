@@ -45,13 +45,14 @@
         /// <returns>Boolean. Representing if the user guess correctly or not.</returns>
         public bool GuessNumber(int numberToGuess)
         {
-            _displayHandler.DisplayMessage($"Computer Number is: {_number}");
+            _displayHandler.Debug($"Computer's guess is: {_number}");
             var success = numberToGuess == _number;
             
             //ToDo: set up Resource file for hard coded text
             var successMessage = success ? "correct!" : "incorrect.";
             var message = $"Your guess was {successMessage}";
-            _displayHandler.DisplayMessage(message);
+            _displayHandler.AppendInstructions(message);
+            _displayHandler.DisplayInstructions();
 
             return success;
         }

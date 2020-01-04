@@ -3,7 +3,6 @@ namespace Assets.Code
 {
     using System;
     using System.Collections.Generic;
-    using System.Threading;
     using Handlers.Display;
     using Handlers.Input;
     using NumberWizardBusinessLogic.Handlers.Guessing;
@@ -43,7 +42,7 @@ namespace Assets.Code
         private const int _mockUserChosenNumber = 37; //ToDo: remove once user can enter input
         private List<int> _numbersThatHaveBeenGuessed = new List<int>(); //ToDo: remove this once user can actually guess
 
-        private System.Random randomGenerator = new System.Random();
+        private readonly System.Random randomGenerator = new System.Random();
 
         /// <summary>
         ///     Start is called before the first frame update.
@@ -55,7 +54,7 @@ namespace Assets.Code
         {
             Initialize();
             DisplayStartMessage();
-            SimulateGuessing();
+            //SimulateGuessing();
         }
 
         /// <summary>
@@ -165,7 +164,8 @@ namespace Assets.Code
             //ToDo: add instructions for scoring mechanic, should there be a max score? Most likely. Or best 3 out of 5, would be less awful to play.
 
             var startMessage = $"I am going to pick a number between {_minimumNumber} and {_maximumNumber}, you must do the same. We will have {MaximumRounds} rounds to guess the each others number. Press the space bar when ready to continue...";
-            Debug.Log(startMessage);
+            _displayHandler.DisplayInstructions(startMessage);
+            _displayHandler.Debug(startMessage);
         }
 
         //ToDo: call this from the start method to get a guess for the user, then ask the computer if this is their number
@@ -224,7 +224,7 @@ namespace Assets.Code
                     if (_gameState == GameState.Guess)
                     {
                         const string endGameMessage = "Thank you for playing! - Kevin Kabatra";
-                        Debug.Log(endGameMessage);
+                        _displayHandler.DisplayMessage(endGameMessage);
 
                         _gameState = GameState.GameOver;
                     }
@@ -269,6 +269,7 @@ namespace Assets.Code
 
             _computerChosenNumber = new NumberPicker(_displayHandler, _maximumNumber, _minimumNumber);
 
+            //ToDo: possibly remove once the user can enter a guess
             //Skip the first number, the computer is using this for their guess.
             randomGenerator.Next(_minimumNumber, _maximumNumber);
         }
