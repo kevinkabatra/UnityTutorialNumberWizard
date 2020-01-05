@@ -22,11 +22,6 @@
         private List<GameObject> _computerGuessShouldBeHigherOrLowerGameObjects;
         private List<GameObject> _userGuessingUserInterfaceGameObjects;
 
-        public UserInterfaceView()
-        {
-            
-        }
-
         public List<GameObject> GetComputerGuessingUserInterfaceGameObjects()
         {
             if (_computerGuessingUserInterfaceGameObjects == null)

@@ -10,6 +10,7 @@ namespace Assets.Code
     using NumberWizardBusinessLogic.Handlers.SearchEngines;
     using States;
     using UnityEngine;
+    using UnityEngine.UI;
 
     /// <summary>
     ///     Entry point to the application.
@@ -157,7 +158,20 @@ namespace Assets.Code
             _guess = _guessHandler.HandleGuess(_minimumNumber, _maximumNumber);
         }
 
+        private void UserAttemptsGuess()
+        {
+            var userGuess = _displayHandler.GetUserGuess();
+            var userGuessResult = _computerChosenNumber.GuessNumber(userGuess);
 
+            _displayHandler.Debug($"User Guess: {userGuess}"); //ToDo: remove later on
+            _displayHandler.Debug($"User Guess Result: {userGuessResult}"); //ToDo: remove later on
+
+            if (userGuessResult)
+            {
+                _match.AddToPlayerScore();
+                //shouldStop = true;
+            }
+        }
 
         //ToDo: call this from the start method to get a guess for the user, then ask the computer if this is their number
         private int MockUserInput()
@@ -182,14 +196,14 @@ namespace Assets.Code
             return randomNumber;
         }
 
-
-
         /// <summary>
         ///     Initializes all of the components.
         /// </summary>
         private void Initialize()
         {
             _displayHandler = new DisplayHandler();
+            SetOnClickForAttemptGuess();
+
             _displayHandler.HideUserInterface();
 
             _searchEngine = new BinarySearchEngine(_minimumNumber, _maximumNumber);
@@ -207,6 +221,12 @@ namespace Assets.Code
             //ToDo: possibly remove once the user can enter a guess
             //Skip the first number, the computer is using this for their guess.
             randomGenerator.Next(_minimumNumber, _maximumNumber);
+        }
+
+        public void SetOnClickForAttemptGuess()
+        {
+            var attemptGuessButton = GameObject.Find("AttemptGuess").GetComponent<Button>();
+            attemptGuessButton.onClick.AddListener(UserAttemptsGuess);
         }
     }
 }

@@ -3,6 +3,7 @@
     using NumberWizardBusinessLogic.Handlers.Display;
     using System.Collections.Generic;
     using UnityEngine;
+    using UnityEngine.UI;
 
     /// <summary>
     ///     Implementation of the Display Handler interface.
@@ -134,6 +135,14 @@
         {
             SetComputerGuessingUserInterfaceGameObjectsVisibility(isVisible);
             SetUserGuessingUserInterfaceGameObjectsVisibility(isVisible);
+        }
+
+        public int GetUserGuess()
+        {
+            var userGuessInputField = _userInterface.UserGuess.GetComponent<InputField>();
+            var userGuess = int.Parse(userGuessInputField.text);
+
+            return userGuess;
         }
     }
 }

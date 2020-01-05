@@ -51,8 +51,8 @@
             //ToDo: set up Resource file for hard coded text
             var successMessage = success ? "correct!" : "incorrect.";
             var message = $"Your guess was {successMessage}";
-            _displayHandler.AppendInstructions(message);
-            _displayHandler.DisplayInstructions();
+            
+            _displayHandler.DisplayInstructions(message);
 
             return success;
         }
