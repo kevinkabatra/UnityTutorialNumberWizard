@@ -3,7 +3,6 @@
     using NumberWizardBusinessLogic.Handlers.Display;
     using System.Collections.Generic;
     using UnityEngine;
-    using UnityEngine.UI;
 
     /// <summary>
     ///     Implementation of the Display Handler interface.
@@ -86,10 +85,9 @@
         /// </summary>
         public void HideUserInterface()
         {
-            foreach(var gameObject in _userInterface.GetGameObjects())
-            {
-                gameObject.SetActive(false);
-            }
+            SetMainUserInterfaceVisibility(false);
+            SetComputerGuessIsCorrectOrIncorrectGameObjectsVisibility(false);
+            SetComputerGuessingShouldBeHigherOrLowerGameObjectsVisibility(false);
         }
 
         /// <summary>
@@ -97,10 +95,45 @@
         /// </summary>
         public void ShowUserInterface()
         {
-            foreach (var gameObject in _userInterface.GetGameObjects())
+            SetMainUserInterfaceVisibility(true);
+        }
+
+        public void SetComputerGuessIsCorrectOrIncorrectGameObjectsVisibility(bool isVisible)
+        {
+            foreach (var gameObject in _userInterface.GetComputerGuessIsCorrectOrIncorrectGameObjects())
             {
-                gameObject.SetActive(true);
+                gameObject.SetActive(isVisible);
             }
+        }
+
+        public void SetComputerGuessingShouldBeHigherOrLowerGameObjectsVisibility(bool isVisible)
+        {
+            foreach (var gameObject in _userInterface.GetComputerGuessShouldBeHigherOrLowerGameObjects())
+            {
+                gameObject.SetActive(isVisible);
+            }
+        }
+
+        private void SetComputerGuessingUserInterfaceGameObjectsVisibility(bool isVisible)
+        {
+            foreach (var gameObject in _userInterface.GetComputerGuessingUserInterfaceGameObjects())
+            {
+                gameObject.SetActive(isVisible);
+            }
+        }
+
+        private void SetUserGuessingUserInterfaceGameObjectsVisibility(bool isVisible)
+        {
+            foreach (var gameObject in _userInterface.GetUserGuessingUserInterfaceGameObjects())
+            {
+                gameObject.SetActive(isVisible);
+            }
+        }
+
+        private void SetMainUserInterfaceVisibility(bool isVisible)
+        {
+            SetComputerGuessingUserInterfaceGameObjectsVisibility(isVisible);
+            SetUserGuessingUserInterfaceGameObjectsVisibility(isVisible);
         }
     }
 }

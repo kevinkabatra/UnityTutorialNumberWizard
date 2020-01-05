@@ -7,6 +7,8 @@
     public class UserInterfaceView : MonoBehaviour
     {
         [SerializeField] public Button AttemptGuess;
+        [SerializeField] public Button ComputerGuessIsCorrect;
+        [SerializeField] public Button ComputerGuessIsIncorrect;
         [SerializeField] public Button ComputerGuessShouldBeHigher;
         [SerializeField] public Button ComputerGuessShouldBeLower;
 
@@ -15,21 +17,71 @@
 
         [SerializeField] public Text Instructions;
 
-        private List<GameObject> _gameObjects;
+        private List<GameObject> _computerGuessingUserInterfaceGameObjects;
+        private List<GameObject> _computerGuessIsCorrectOrIncorrectGameObjects;
+        private List<GameObject> _computerGuessShouldBeHigherOrLowerGameObjects;
+        private List<GameObject> _userGuessingUserInterfaceGameObjects;
 
-        public List<GameObject> GetGameObjects()
+        public UserInterfaceView()
         {
-            if (_gameObjects == null)
+            
+        }
+
+        public List<GameObject> GetComputerGuessingUserInterfaceGameObjects()
+        {
+            if (_computerGuessingUserInterfaceGameObjects == null)
             {
-                _gameObjects = new List<GameObject>()
+                _computerGuessingUserInterfaceGameObjects = new List<GameObject>()
                 {
-                    GameObject.Find("AttemptGuess"),
                     GameObject.Find("ComputerGuess"),
-                    GameObject.Find("UserGuess")
+                    GameObject.Find("ComputerName"),
                 };
             }
 
-            return _gameObjects;
+            return _computerGuessingUserInterfaceGameObjects;
+        }
+
+        public List<GameObject> GetUserGuessingUserInterfaceGameObjects()
+        {
+            if (_userGuessingUserInterfaceGameObjects == null)
+            {
+                _userGuessingUserInterfaceGameObjects = new List<GameObject>()
+                {
+                    GameObject.Find("AttemptGuess"),
+                    GameObject.Find("UserGuess"),
+                    GameObject.Find("UserName"),
+                };
+            }
+
+            return _userGuessingUserInterfaceGameObjects;
+        }
+
+        public List<GameObject> GetComputerGuessIsCorrectOrIncorrectGameObjects()
+        {
+            if (_computerGuessIsCorrectOrIncorrectGameObjects == null)
+            {
+                _computerGuessIsCorrectOrIncorrectGameObjects = new List<GameObject>()
+                {
+                    GameObject.Find("ComputerGuessIsCorrect"),
+                    GameObject.Find("ComputerGuessIsIncorrect")
+                };
+            }
+
+            return _computerGuessIsCorrectOrIncorrectGameObjects;
+        }
+
+        public List<GameObject> GetComputerGuessShouldBeHigherOrLowerGameObjects()
+        {
+            if (_computerGuessShouldBeHigherOrLowerGameObjects == null)
+            {
+                _computerGuessShouldBeHigherOrLowerGameObjects = new List<GameObject>()
+                {
+                    GameObject.Find("ComputerGuessShouldBeHigher"),
+                    GameObject.Find("ComputerGuessShouldBeLower")
+                };
+            }
+
+            return _computerGuessShouldBeHigherOrLowerGameObjects;
         }
     }
 }
