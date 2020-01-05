@@ -1,8 +1,6 @@
 ﻿// ReSharper disable UnusedMember.Global, Start and Update are called by the Unity Engine, attached to Scene.Main.
 namespace Assets.Code
 {
-    using System;
-    using System.Collections.Generic;
     using Handlers.Display;
     using Handlers.Input;
     using NumberWizardBusinessLogic.Handlers.Guessing;
@@ -10,7 +8,7 @@ namespace Assets.Code
     using NumberWizardBusinessLogic.Handlers.SearchEngines;
     using States;
     using UnityEngine;
-    using UnityEngine.UI;
+    using Buttons;
 
     /// <summary>
     ///     Entry point to the application.
@@ -87,47 +85,27 @@ namespace Assets.Code
             _guess = _guessHandler.HandleGuess(_minimumNumber, _maximumNumber);
         }
 
-        private void UserAttemptsGuess()
-        {
-            var userGuess = _displayHandler.GetUserGuess();
-            var userGuessResult = _computerChosenNumber.GuessNumber(userGuess);
-
-            _displayHandler.Debug($"User Guess: {userGuess}"); //ToDo: remove later on
-            _displayHandler.Debug($"User Guess Result: {userGuessResult}"); //ToDo: remove later on
-
-            if (userGuessResult)
-            {
-                _match.AddToPlayerScore();
-            }
-        }
-
         /// <summary>
         ///     Initializes all of the components.
         /// </summary>
         private void Initialize()
         {
+            _searchEngine = new BinarySearchEngine(_minimumNumber, _maximumNumber);
+            _match = new MatchFacade(MaximumRounds);
+            _gameState = GameState.Start;
+
             _displayHandler = new DisplayHandler();
-            SetOnClickForAttemptGuess();
+            _computerChosenNumber = new NumberPicker(_displayHandler, _maximumNumber, _minimumNumber);
+
+            // Need to set on click events prior to hiding the user interface
+            var attemptGuess = new AttemptGuess(_displayHandler, _computerChosenNumber);
+            attemptGuess.SetOnClickForAttemptGuess();
 
             _displayHandler.HideUserInterface();
-
-            _searchEngine = new BinarySearchEngine(_minimumNumber, _maximumNumber);
 
             _guessHandler = new GuessHandler(_searchEngine, _displayHandler);
             _inputListener = new InputListener();
             _inputHandler = new InputHandler(_displayHandler, _inputListener);
-
-            _match = new MatchFacade(MaximumRounds);
-
-            _gameState = GameState.Start;
-
-            _computerChosenNumber = new NumberPicker(_displayHandler, _maximumNumber, _minimumNumber);
-        }
-
-        public void SetOnClickForAttemptGuess()
-        {
-            var attemptGuessButton = GameObject.Find("AttemptGuess").GetComponent<Button>();
-            attemptGuessButton.onClick.AddListener(UserAttemptsGuess);
         }
     }
 }
