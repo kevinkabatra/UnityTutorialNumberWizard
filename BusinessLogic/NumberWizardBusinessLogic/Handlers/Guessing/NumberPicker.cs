@@ -45,13 +45,22 @@
         /// <returns>Boolean. Representing if the user guess correctly or not.</returns>
         public bool GuessNumber(int numberToGuess)
         {
-            _displayHandler.Debug($"Computer's guess is: {_number}");
-            var success = numberToGuess == _number;
-            
             //ToDo: set up Resource file for hard coded text
+            var success = numberToGuess == _number;
             var successMessage = success ? "correct!" : "incorrect.";
-            var message = $"Your guess was {successMessage}";
-            
+
+            var higherOrLowerMessage = "";
+            if(numberToGuess < _number)
+            {
+                higherOrLowerMessage = "Your number is too low, try a higher number next time.";
+            }
+            else if (numberToGuess > _number)
+            {
+                higherOrLowerMessage = "Your number is too high, try a lower number next time.";
+            }
+
+            var message = $"Your guess was {successMessage} {higherOrLowerMessage}";
+            _displayHandler.Debug($"Computer's guess is: {_number}");
             _displayHandler.DisplayInstructions(message);
 
             return success;
