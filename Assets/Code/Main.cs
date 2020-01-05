@@ -75,14 +75,7 @@ namespace Assets.Code
             //ToDo: Add conditional logic: if there are no more rounds then the "match" will have finished.
             //ToDo: Implement best out of three system. Could either use a state machine for this, or another class like RoundManager. Might make more sense given the design to have a MatchManager instead.
 
-            //if(_gameState == GameState.Start)
-            //{
-            //    HandleUserInput();
-            //}
-            //else
-            //{
-
-            //}
+            HandleUserInput();
         }
 
         private void SimulateGuessing()
@@ -147,6 +140,14 @@ namespace Assets.Code
         }
 
         /// <summary>
+        ///     Displays the start message to the user.
+        /// </summary>
+        private void DisplayStartMessage()
+        {
+            _displayHandler.DisplayStartMessage(_minimumNumber, _maximumNumber, MaximumRounds);
+        }
+
+        /// <summary>
         ///     Uses the Guess Handler to attempt the next guess.
         /// </summary>
         private void AttemptGuess()
@@ -155,18 +156,7 @@ namespace Assets.Code
             _guess = _guessHandler.HandleGuess(_minimumNumber, _maximumNumber);
         }
 
-        /// <summary>
-        ///     Displays the start message to the user.
-        /// </summary>
-        private void DisplayStartMessage()
-        {
-            //ToDo: fix hard coded label.
-            //ToDo: add instructions for scoring mechanic, should there be a max score? Most likely. Or best 3 out of 5, would be less awful to play.
 
-            var startMessage = $"I am going to pick a number between {_minimumNumber} and {_maximumNumber}, you must do the same. We will have {MaximumRounds} rounds to guess the each others number. Press the space bar when ready to continue...";
-            _displayHandler.DisplayInstructions(startMessage);
-            _displayHandler.Debug(startMessage);
-        }
 
         //ToDo: call this from the start method to get a guess for the user, then ask the computer if this is their number
         private int MockUserInput()
@@ -204,6 +194,7 @@ namespace Assets.Code
                 case KeyCode.Space:
                     if (_gameState == GameState.Start)
                     {
+                        _displayHandler.ShowUserInterface();
                         _gameState = GameState.Guess;
                         //AttemptGuess();
                     }
@@ -258,6 +249,8 @@ namespace Assets.Code
         private void Initialize()
         {
             _displayHandler = new DisplayHandler();
+            _displayHandler.HideUserInterface();
+
             _searchEngine = new BinarySearchEngine(_minimumNumber, _maximumNumber);
 
             _guessHandler = new GuessHandler(_searchEngine, _displayHandler);

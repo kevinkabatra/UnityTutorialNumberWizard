@@ -3,6 +3,7 @@
     using NumberWizardBusinessLogic.Handlers.Display;
     using System.Collections.Generic;
     using UnityEngine;
+    using UnityEngine.UI;
 
     /// <summary>
     ///     Implementation of the Display Handler interface.
@@ -44,6 +45,19 @@
         }
 
         /// <summary>
+        ///     Displays the start message to the user.
+        /// </summary>
+        public void DisplayStartMessage(int minimumNumber, int maximumNumber, int maximumRounds)
+        {
+            //ToDo: fix hard coded label.
+            //ToDo: add instructions for scoring mechanic, should there be a max score? Most likely. Or best 3 out of 5, would be less awful to play.
+
+            var startMessage = $"I am going to pick a number between {minimumNumber} and {maximumNumber}, you must do the same. We will have {maximumRounds} rounds to guess the each others number. Press the space bar when ready to continue...";
+            DisplayInstructions(startMessage);
+            Debug(startMessage);
+        }
+
+        /// <summary>
         ///     Displays a message to the user.
         /// </summary>
         /// <param name="message">Message to display.</param>
@@ -65,6 +79,28 @@
             var userInterfaceViewScript = userInterfaceViewGameObject.GetComponent<UserInterfaceView>();
 
             return userInterfaceViewScript;
+        }
+
+        /// <summary>
+        ///     Hides the user interface elements to prevent guessing.
+        /// </summary>
+        public void HideUserInterface()
+        {
+            foreach(var gameObject in _userInterface.GetGameObjects())
+            {
+                gameObject.SetActive(false);
+            }
+        }
+
+        /// <summary>
+        ///     Shows the user interface elements to enable guessing.
+        /// </summary>
+        public void ShowUserInterface()
+        {
+            foreach (var gameObject in _userInterface.GetGameObjects())
+            {
+                gameObject.SetActive(true);
+            }
         }
     }
 }
