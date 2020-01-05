@@ -32,6 +32,7 @@ namespace Assets.Code
         private DisplayHandler _displayHandler;
         private GuessHandler _guessHandler;
         private InputHandler _inputHandler;
+        private InputListener _inputListener;
 
         private MatchFacade _match;
 
@@ -75,7 +76,7 @@ namespace Assets.Code
             //ToDo: Add conditional logic: if there are no more rounds then the "match" will have finished.
             //ToDo: Implement best out of three system. Could either use a state machine for this, or another class like RoundManager. Might make more sense given the design to have a MatchManager instead.
 
-            HandleUserInput();
+            _gameState = _inputHandler.HandleKeyboardInput(_gameState);
         }
 
         private void SimulateGuessing()
@@ -181,67 +182,7 @@ namespace Assets.Code
             return randomNumber;
         }
 
-        /// <summary>
-        ///     Handler for all keyboard input, actions taken depend on the Game State.
-        /// </summary>
-        private void HandleUserInput()
-        {
-            var input = _inputHandler.Listen();
 
-            // ReSharper disable once SwitchStatementMissingSomeCases, most inputs are not supported.
-            switch (input)
-            {
-                case KeyCode.Space:
-                    if (_gameState == GameState.Start)
-                    {
-                        _displayHandler.ShowUserInterface();
-                        _gameState = GameState.Guess;
-                        //AttemptGuess();
-                    }
-                    break;
-                    
-                case KeyCode.None:
-                    break;
-
-                case KeyCode.N:
-                    if (_gameState == GameState.Guess)
-                    {
-                        _gameState = GameState.IterateGuess;
-                        _guessHandler.DisplayGuessIterationInstructions();
-                    }
-                    break;
-
-                case KeyCode.Y:
-                    if (_gameState == GameState.Guess)
-                    {
-                        const string endGameMessage = "Thank you for playing! - Kevin Kabatra";
-                        _displayHandler.DisplayMessage(endGameMessage);
-
-                        _gameState = GameState.GameOver;
-                    }
-                    break;
-
-                case KeyCode.DownArrow:
-                    if (_gameState == GameState.IterateGuess)
-                    {
-                        _maximumNumber = _guess - 1;
-                        AttemptGuess();
-                    }
-                    break;
-
-                case KeyCode.UpArrow:
-                    if (_gameState == GameState.IterateGuess)
-                    {
-                        _minimumNumber = _guess + 1;
-                        AttemptGuess();
-                    }
-                    break;
-
-                default:
-                    var errorMessage = $"KeyCode: {input} is not supported.";
-                    throw new NotSupportedException(errorMessage);
-            }
-        }
 
         /// <summary>
         ///     Initializes all of the components.
@@ -254,7 +195,8 @@ namespace Assets.Code
             _searchEngine = new BinarySearchEngine(_minimumNumber, _maximumNumber);
 
             _guessHandler = new GuessHandler(_searchEngine, _displayHandler);
-            _inputHandler = new InputHandler();
+            _inputListener = new InputListener();
+            _inputHandler = new InputHandler(_displayHandler, _inputListener);
 
             _match = new MatchFacade(MaximumRounds);
 
