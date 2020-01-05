@@ -35,6 +35,7 @@
 
             if (userGuessResult)
             {
+                //ToDo: will need to do something janky here to make this work. Perhaps get the game object that displays the score and then increment that, treat the UI as if it is the source of truth.
                 //_match.AddToPlayerScore();
             }
         }
